@@ -28,9 +28,17 @@ class Completion {
 const generateCompletion = async ({
   prompt,
 }) => {
-  if (config.APP_ENV !== 'production') return new Completion({ text: MOCK_TEXT_OK });
+  if (config.APP_DEBUG) {
+    console.log('[DEBUG] generateCompletion called with messages:');
+    console.log(JSON.stringify(prompt.messages, null, 2));
+  }
   const { data } = await createChatCompletion({ messages: prompt.messages });
   const [choice] = data.choices;
+  if (config.APP_DEBUG) {
+    console.log('[DEBUG] OpenAI response:');
+    console.log('  - content:', choice.message.content);
+    console.log('  - finish_reason:', choice.finish_reason);
+  }
   return new Completion({
     text: choice.message.content.trim(),
     finishReason: choice.finish_reason,

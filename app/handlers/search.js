@@ -47,14 +47,21 @@ const exec = (context) => check(context) && (
       return context.pushError(err);
     }
     prompt.write(ROLE_HUMAN, `${trimmedText}`).write(ROLE_AI);
+    if (config.APP_DEBUG) {
+      console.log('[DEBUG] Prompt before generateCompletion:');
+      console.log(prompt.toString());
+    }
     try {
       const { text, isFinishReasonStop } = await generateCompletion({ prompt });
+      if (config.APP_DEBUG) console.log('[DEBUG] Generated text:', text);
       prompt.patch(text);
       setPrompt(context.userId, prompt);
       updateHistory(context.id, (history) => history.write(config.BOT_NAME, text));
       const actions = isFinishReasonStop ? [] : [COMMAND_BOT_CONTINUE];
+      if (config.APP_DEBUG) console.log('[DEBUG] Pushing response to context...');
       context.pushText(text, actions);
     } catch (err) {
+      if (config.APP_DEBUG) console.log('[DEBUG] Generation error:', err.message);
       context.pushError(err);
     }
     return context;
