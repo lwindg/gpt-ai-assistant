@@ -202,8 +202,21 @@ class Context {
     aliases,
   }) {
     const content = this.trimmedText.toLowerCase();
-    if (aliases.some((alias) => content.startsWith(alias.toLowerCase()))) return true;
-    if (content.startsWith(text.toLowerCase())) return true;
+    if (config.APP_DEBUG) {
+      console.log('[DEBUG] hasCommand check:');
+      console.log('  - content:', content);
+      console.log('  - text:', text);
+      console.log('  - aliases:', aliases);
+    }
+    if (aliases.some((alias) => content.startsWith(alias.toLowerCase()))) {
+      if (config.APP_DEBUG) console.log('  - Matched by alias!');
+      return true;
+    }
+    if (content.startsWith(text.toLowerCase())) {
+      if (config.APP_DEBUG) console.log('  - Matched by text!');
+      return true;
+    }
+    if (config.APP_DEBUG) console.log('  - No match');
     return false;
   }
 
