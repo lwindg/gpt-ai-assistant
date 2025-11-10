@@ -98,7 +98,7 @@ const zh = {
   __COMPLETION_DEFAULT_HUMAN_PROMPT: (name) => (name ? `我是${name}` : '哈囉'),
   __COMPLETION_DEFAULT_AI_PROMPT: (name) => (name ? `我是${name}` : '哈囉'),
   __COMPLETION_DEFAULT_AI_TONE: (tone) => (tone ? `以${tone}的語氣回應我：` : ''),
-  __COMPLETION_SEARCH: (a, q) => `根據「${a}」查詢結果，回答「${q}」問題`,
+  __COMPLETION_SEARCH: (a, q) => `${a}\n\n根據以上資訊，用一句話簡潔回答：${q}`,
   __COMPLETION_SEARCH_NOT_FOUND: '查無資料',
   __COMPLETION_QUOTATION_MARK_OPENING: '「',
   __COMPLETION_QUOTATION_MARK_CLOSING: '」',

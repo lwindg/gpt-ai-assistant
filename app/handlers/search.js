@@ -52,7 +52,7 @@ const exec = (context) => check(context) && (
       console.log(prompt.toString());
     }
     try {
-      const { text, isFinishReasonStop } = await generateCompletion({ prompt });
+      const { text, isFinishReasonStop } = await generateCompletion({ prompt, verbosity: 'low' });
       if (config.APP_DEBUG) console.log('[DEBUG] Generated text:', text);
       prompt.patch(text);
       setPrompt(context.userId, prompt);
